@@ -14,8 +14,8 @@ import {Order} from './models/Order';
 import {OrderItem} from './models/OrderItem';
 
 @Module({
-    controllers: [UsersController],
-    providers: [UsersService],
+    controllers: [],
+    providers: [],
     imports: [
         ConfigModule.forRoot({ isGlobal: true }),
         SequelizeModule.forRoot({

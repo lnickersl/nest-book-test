@@ -1,7 +1,8 @@
-import {AllowNull, BelongsToMany, Column, DataType, ForeignKey, Model, Table} from 'sequelize-typescript';
+import {AllowNull, BelongsTo, BelongsToMany, Column, DataType, ForeignKey, Model, Table} from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
 import {Author} from './Author';
 import {AuthorBook} from './AuthorBook';
+import {OrderItem} from './OrderItem';
 
 @Table({ tableName: 'books' })
 export class Book extends Model<Book> {
@@ -28,6 +29,15 @@ export class Book extends Model<Book> {
         type: DataType.INTEGER,
     })
     price!: number;
+
+    @ApiProperty({ example: 1, description: 'Order Item ID' })
+    @ForeignKey(() => OrderItem)
+    @AllowNull(false)
+    @Column(DataType.INTEGER)
+    orderItemId!: number;
+
+    @BelongsTo(() => OrderItem)
+    orderItem: OrderItem;
 
     @BelongsToMany(() => Author, {
         through: {

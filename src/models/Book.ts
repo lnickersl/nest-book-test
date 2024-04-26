@@ -26,6 +26,7 @@ export class Book extends Model<Book, BookCreationAttributes> {
     @AllowNull(false)
     @Column({
         type: DataType.STRING,
+        unique: true,
     })
     name!: string;
 

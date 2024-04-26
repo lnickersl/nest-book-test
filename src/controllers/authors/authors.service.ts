@@ -11,4 +11,9 @@ export class AuthorsService {
         const author = await this.authorRepository.create(dto);
         return author;
     }
+
+    async getAllAuthors() {
+        const authors = await this.authorRepository.findAll();
+        return authors;
+    }
 }

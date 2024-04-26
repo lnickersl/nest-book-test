@@ -1,11 +1,10 @@
-import {AllowNull, BelongsTo, Column, DataType, ForeignKey, HasOne, Model, Table} from 'sequelize-typescript';
+import {AllowNull, BelongsTo, Column, DataType, ForeignKey, Model, Table} from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
 import {Order} from './Order';
 import {Book} from './Book';
 
 @Table({ tableName: 'order_items' })
 export class OrderItem extends Model<OrderItem> {
-    
     @ApiProperty({ example: 1, description: 'Unique ID' })
     @Column({
         type: DataType.INTEGER,
@@ -24,6 +23,12 @@ export class OrderItem extends Model<OrderItem> {
     @BelongsTo(() => Order)
     order!: Order;
 
-    @HasOne(() => Book)
-    book: Book
+    @ApiProperty({ example: 1, description: 'Book ID' })
+    @ForeignKey(() => Book)
+    @AllowNull(false)
+    @Column(DataType.INTEGER)
+    bookId!: number;
+
+    @BelongsTo(() => Book)
+    book!: Book;
 }

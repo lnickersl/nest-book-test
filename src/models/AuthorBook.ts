@@ -5,6 +5,15 @@ import {ApiProperty} from '@nestjs/swagger';
 
 @Table({ timestamps: false, tableName: 'authors_books' })
 export class AuthorBook extends Model<AuthorBook> {
+    @ApiProperty({ example: 1, description: 'Unique ID' })
+    @Column({
+        type: DataType.INTEGER,
+        unique: true,
+        autoIncrement: true,
+        primaryKey: true,
+    })
+    id: number;
+    
     @ApiProperty({ example: 1, description: 'Author ID' })
     @ForeignKey(() => Author)
     @AllowNull(false)

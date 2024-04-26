@@ -3,9 +3,15 @@ import { ApiProperty } from '@nestjs/swagger';
 import {Author} from './Author';
 import {AuthorBook} from './AuthorBook';
 import {OrderItem} from './OrderItem';
+import {Order} from './Order';
+
+interface BookCreationAttributes {
+    name: string;
+    price: number;
+};
 
 @Table({ tableName: 'books' })
-export class Book extends Model<Book> {
+export class Book extends Model<Book, BookCreationAttributes> {
     
     @ApiProperty({ example: 1, description: 'Unique ID' })
     @Column({
@@ -16,7 +22,7 @@ export class Book extends Model<Book> {
     })
     id: number;
 
-    @ApiProperty({ example: "The Silmarillion", description: 'Name of the book' })
+    @ApiProperty({ example: 'The Silmarillion', description: 'Name of the book' })
     @AllowNull(false)
     @Column({
         type: DataType.STRING,
@@ -30,14 +36,12 @@ export class Book extends Model<Book> {
     })
     price!: number;
 
-    @ApiProperty({ example: 1, description: 'Order Item ID' })
-    @ForeignKey(() => OrderItem)
-    @AllowNull(false)
-    @Column(DataType.INTEGER)
-    orderItemId!: number;
-
-    @BelongsTo(() => OrderItem)
-    orderItem: OrderItem;
+    @BelongsToMany(() => Order, {
+        through: {
+            model: () => OrderItem,
+        },
+    })
+    orders: Order[];
 
     @BelongsToMany(() => Author, {
         through: {

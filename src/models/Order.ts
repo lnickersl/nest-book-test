@@ -1,10 +1,15 @@
-import {AllowNull, BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table} from 'sequelize-typescript';
+import {AllowNull, BelongsTo, BelongsToMany, Column, DataType, ForeignKey, HasMany, Model, Table} from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
 import {OrderItem} from './OrderItem';
 import {User} from './User';
+import {Book} from './Book';
+
+interface OrderCreationAttributes {
+    ordererId: number;
+}
 
 @Table({ tableName: 'orders' })
-export class Order extends Model<Order> {
+export class Order extends Model<Order, OrderCreationAttributes> {
     
     @ApiProperty({ example: 1, description: 'Unique ID' })
     @Column({
@@ -24,6 +29,10 @@ export class Order extends Model<Order> {
     @BelongsTo(() => User)
     orderer!: User;
 
-    @HasMany(() => OrderItem)
-    items: OrderItem[];
+    @BelongsToMany(() => Book, {
+        through: {
+            model: () => OrderItem,
+        },
+    })
+    books: Book[];
 }

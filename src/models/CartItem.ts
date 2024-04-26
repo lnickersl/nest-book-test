@@ -1,15 +1,15 @@
 import {AllowNull, BelongsTo, Column, DataType, ForeignKey, Model, Table} from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
-import {Order} from './Order';
+import {User} from './User';
 import {Book} from './Book';
 
-interface OrderItemCreationAttributes {
-    orderId: number;
+interface CartItemCreationAttributes {
+    ownerId: number;
     bookId: number;
 }
 
-@Table({ tableName: 'order_items' })
-export class OrderItem extends Model<OrderItem, OrderItemCreationAttributes> {
+@Table({ tableName: 'cart_items' })
+export class CartItem extends Model<CartItem, CartItemCreationAttributes> {
     @ApiProperty({ example: 1, description: 'Unique ID' })
     @Column({
         type: DataType.INTEGER,
@@ -19,14 +19,21 @@ export class OrderItem extends Model<OrderItem, OrderItemCreationAttributes> {
     })
     id: number;
 
-    @ApiProperty({ example: 1, description: 'Order ID' })
-    @ForeignKey(() => Order)
+    @ApiProperty({ example: 2, description: 'Number  of books of this type' })
+    @AllowNull(false)
+    @Column({
+        type: DataType.INTEGER,
+    })
+    quantity!: number;
+
+    @ApiProperty({ example: 1, description: 'Cart owner ID' })
+    @ForeignKey(() => User)
     @AllowNull(false)
     @Column(DataType.INTEGER)
-    orderId!: number;
+    ownerId!: number;
 
-    @BelongsTo(() => Order)
-    order!: Order;
+    @BelongsTo(() => User)
+    owner!: User;
 
     @ApiProperty({ example: 1, description: 'Book ID' })
     @ForeignKey(() => Book)

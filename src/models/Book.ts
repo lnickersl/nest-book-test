@@ -4,6 +4,8 @@ import {Author} from './Author';
 import {AuthorBook} from './AuthorBook';
 import {OrderItem} from './OrderItem';
 import {Order} from './Order';
+import {User} from './User';
+import {CartItem} from './CartItem';
 
 interface BookCreationAttributes {
     name: string;
@@ -36,6 +38,13 @@ export class Book extends Model<Book, BookCreationAttributes> {
         type: DataType.INTEGER,
     })
     price!: number;
+
+    @BelongsToMany(() => User, {
+        through: {
+            model: () => CartItem,
+        },
+    })
+    users: User[];
 
     @BelongsToMany(() => Order, {
         through: {

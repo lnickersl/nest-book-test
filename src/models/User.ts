@@ -1,7 +1,9 @@
-import {AllowNull, Column, DataType, HasMany, IsEmail, Model, Table} from 'sequelize-typescript';
+import {AllowNull, BelongsToMany, Column, DataType, HasMany, HasOne, IsEmail, Model, Table} from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
 import {Order} from './Order';
 import {CreateUserDto} from '../controllers/users/dto/create-user.dto';
+import {Book} from './Book';
+import {CartItem} from './CartItem';
 
 @Table({ tableName: 'users' })
 export class User extends Model<User, CreateUserDto> {
@@ -38,6 +40,13 @@ export class User extends Model<User, CreateUserDto> {
         type: DataType.STRING,
     })
     password!: string;
+
+    @BelongsToMany(() => Book, {
+        through: {
+            model: () => CartItem,
+        },
+    })
+    books: Book[];
 
     @HasMany(() => Order)
     orders: Order[];

@@ -1,5 +1,5 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {ArrayMinSize, IsArray, IsNotEmpty, IsNumber, IsString, Length} from 'class-validator';
+import {ArrayMinSize, IsArray, IsInt, IsNotEmpty, IsString, Length, Min} from 'class-validator';
 
 const MIN_STRING = 6;
 const MAX_STRING = 32;
@@ -13,7 +13,8 @@ export class CreateBookDto {
 
     @ApiProperty({ example: 9900, description: 'Price of the book in cents' })
     @IsNotEmpty()
-    @IsNumber({ maxDecimalPlaces: 0 })
+    @IsInt()
+    @Min(1)
     price!: number;
 
     @ApiProperty({ example: [ 'Arkady Strugatsky', 'Boris Strugatsky' ], description: 'List of Authors of the book' })

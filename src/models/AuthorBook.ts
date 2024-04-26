@@ -3,8 +3,13 @@ import {Author} from './Author';
 import {Book} from './Book';
 import {ApiProperty} from '@nestjs/swagger';
 
+interface AuthorBookCreationAttributes {
+    authorId: number;
+    bookId: number;
+}
+
 @Table({ timestamps: false, tableName: 'authors_books' })
-export class AuthorBook extends Model<AuthorBook> {
+export class AuthorBook extends Model<AuthorBook, AuthorBookCreationAttributes> {
     @ApiProperty({ example: 1, description: 'Unique ID' })
     @Column({
         type: DataType.INTEGER,

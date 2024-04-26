@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {CreateAuthorsDto} from './dto/create-author.dto';
+import {CreateAuthorDto} from './dto/create-author.dto';
 import {InjectModel} from '@nestjs/sequelize';
 import {Author} from '../../models/Author';
 
@@ -7,7 +7,7 @@ import {Author} from '../../models/Author';
 export class AuthorsService {
     constructor(@InjectModel(Author) private authorRepository: typeof Author) {}
 
-    async createAuthor(dto: CreateAuthorsDto) {
+    async createAuthor(dto: CreateAuthorDto) {
         const author = await this.authorRepository.create(dto);
         return author;
     }

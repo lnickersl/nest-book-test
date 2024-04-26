@@ -4,7 +4,7 @@ import {IsNotEmpty, IsString, Length} from 'class-validator';
 const MIN_STRING = 6;
 const MAX_STRING = 32;
 
-export class CreateAuthorsDto {
+export class CreateAuthorDto {
     @ApiProperty({ example: "John Ronald Reuel Tolkien", description: 'Full name of the author' })
     @IsNotEmpty()
     @Length(MIN_STRING, MAX_STRING, { message: `field 'fullName' must be between ${MIN_STRING} and ${MAX_STRING} characters` })

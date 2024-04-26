@@ -2,10 +2,10 @@ import {AllowNull, BelongsToMany, Column, DataType, Model, Table} from 'sequeliz
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import {Book} from './Book';
 import {AuthorBook} from './AuthorBook';
-import {CreateAuthorsDto} from '../controllers/authors/dto/create-author.dto';
+import {CreateAuthorDto} from '../controllers/authors/dto/create-author.dto';
 
 @Table({ tableName: 'authors' })
-export class Author extends Model<Author, CreateAuthorsDto> {
+export class Author extends Model<Author, CreateAuthorDto> {
     
     @ApiProperty({ example: 1, description: 'Unique ID' })
     @Column({

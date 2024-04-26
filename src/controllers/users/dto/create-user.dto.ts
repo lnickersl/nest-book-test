@@ -8,7 +8,7 @@ export class CreateUserDto {
     @ApiProperty({ minLength: MIN_STRING, maxLength: MAX_STRING, example: "DemonPhoenix5454", description: 'User name' })
     @IsNotEmpty()
     @Length(MIN_STRING, MAX_STRING, { message: `field 'name' must be between ${MIN_STRING} and ${MAX_STRING} characters` })
-    @IsString({ message: "field 'firstName' must be string" })
+    @IsString({ message: "field 'name' must be string" })
     name!: string;
 
     @ApiProperty({ example: "dima.berezin@mail.ru", description: 'User email' })

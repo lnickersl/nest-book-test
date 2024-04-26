@@ -1,9 +1,10 @@
-import {AllowNull, Column, DataType, HasMany, IsEmail, Model, Table, Unique} from 'sequelize-typescript';
+import {AllowNull, Column, DataType, HasMany, IsEmail, Model, Table} from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
 import {Order} from './Order';
+import {CreateUserDto} from '../controllers/users/dto/create-user.dto';
 
 @Table({ tableName: 'users' })
-export class User extends Model<User> {
+export class User extends Model<User, CreateUserDto> {
     
     @ApiProperty({ example: 1, description: 'Unique ID' })
     @Column({

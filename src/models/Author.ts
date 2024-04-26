@@ -4,7 +4,6 @@ import {Book} from './Book';
 import {AuthorBook} from './AuthorBook';
 import {CreateAuthorsDto} from '../controllers/authors/dto/create-author.dto';
 
-@ApiTags('Authors endpoint')
 @Table({ tableName: 'authors' })
 export class Author extends Model<Author, CreateAuthorsDto> {
     

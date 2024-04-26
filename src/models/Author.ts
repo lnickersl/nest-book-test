@@ -1,10 +1,12 @@
 import {AllowNull, BelongsToMany, Column, DataType, Model, Table} from 'sequelize-typescript';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import {Book} from './Book';
 import {AuthorBook} from './AuthorBook';
+import {CreateAuthorsDto} from '../controllers/authors/dto/create-author.dto';
 
+@ApiTags('Authors endpoint')
 @Table({ tableName: 'authors' })
-export class Author extends Model<Author> {
+export class Author extends Model<Author, CreateAuthorsDto> {
     
     @ApiProperty({ example: 1, description: 'Unique ID' })
     @Column({

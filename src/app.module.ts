@@ -11,7 +11,7 @@ import {Book} from './models/Book';
 import {AuthorBook} from './models/AuthorBook';
 import {Order} from './models/Order';
 import {OrderItem} from './models/OrderItem';
-import { CartItemsModule } from './controllers/books/cart-items/cart-items.module';
+import { CartItemsModule } from './controllers/cart-items/cart-items.module';
 import {CartItem} from './models/CartItem';
 
 @Module({

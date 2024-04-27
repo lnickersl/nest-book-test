@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import {CreateCartItemDto} from './dto/create-cart-item.dto';
 import {InjectModel} from '@nestjs/sequelize';
-import {CartItem} from '../../../models/CartItem';
+import {CartItem} from '../../models/CartItem';
 import {DeleteCartItemDto} from './dto/delete-cart-item.dto';
-import {ParamIdDto} from '../../../helpers/dto/paramId.dto';
 import {FindCartItemDto} from './dto/find-cart-item.dto';
+import {Book} from '../../models/Book';
 
 @Injectable()
 export class CartItemsService {
@@ -16,7 +16,10 @@ export class CartItemsService {
     }
 
     async getAllCartItems({ ownerId }: FindCartItemDto) {
-        const cartItems = await this.cartItemRepository.findAll({ where: { ownerId } });
+        const cartItems = await this.cartItemRepository.findAll({ 
+            where: { ownerId }, 
+            include: Book 
+        });
         return cartItems;
     }
  

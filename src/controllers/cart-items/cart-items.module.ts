@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import {CartItemsController} from './cart-items.controller';
 import {CartItemsService} from './cart-items.service';
-import {CartItem} from '../../../models/CartItem';
+import {CartItem} from '../../models/CartItem';
 import {SequelizeModule} from '@nestjs/sequelize';
 
 @Module({

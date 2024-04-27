@@ -20,7 +20,7 @@ export class CartItemsController {
     @ApiResponse({ status: 200, type: [CartItem] })
     @Get()
     getAll() {
-        return this.cartItemsService.getAllCartItems(+process.env.USER_ID);
+        return this.cartItemsService.getAllCartItems({ ownerId: +process.env.USER_ID });
     }
 
     @ApiOperation({ summary: 'Delete cart item' })
@@ -34,6 +34,6 @@ export class CartItemsController {
     @ApiResponse({ status: 200, type: Number })
     @Get('/empty')
     empty() {
-        return this.cartItemsService.emptyCart(+process.env.USER_ID);
+        return this.cartItemsService.emptyCart({ ownerId: +process.env.USER_ID });
     }
 }

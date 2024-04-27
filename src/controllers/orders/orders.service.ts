@@ -39,7 +39,7 @@ export class OrdersService {
     }
 
     async getAllOrders({ ordererId }: CreateOrderDto) {
-        const orders = await this.orderRepository.findAll({ where: { ordererId } });
+        const orders = await this.orderRepository.findAll({ where: { ordererId }, include: OrderItem });
         return orders;
     }
 }

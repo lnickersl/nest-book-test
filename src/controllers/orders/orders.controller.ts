@@ -1,7 +1,8 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import {ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {OrdersService} from './orders.service';
 import {Order} from '../../models/Order';
+import {SearchOrderDto} from './dto/search-order.dto';
 
 @ApiTags('Orders endpoint')
 @Controller('orders')
@@ -20,5 +21,12 @@ export class OrdersController {
     @Get()
     getAll() {
         return this.ordersService.getAllOrders({ ordererId: +process.env.USER_ID });
+    }
+
+    @ApiOperation({ summary: 'Search orders by book or author name' })
+    @ApiResponse({ status: 200, type: [Order] })
+    @Get('/search')
+    search(@Body() { query }: Omit<SearchOrderDto, 'ordererId'>) {
+        return this.ordersService.searchOrders({ ordererId: +process.env.USER_ID, query });
     }
 }

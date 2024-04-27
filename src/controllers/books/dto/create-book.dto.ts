@@ -1,7 +1,7 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {ArrayMinSize, IsArray, IsInt, IsNotEmpty, IsString, Length, Min} from 'class-validator';
 
-const MIN_STRING = 6;
+const MIN_STRING = 1;
 const MAX_STRING = 32;
 
 export class CreateBookDto {

@@ -4,6 +4,7 @@ import {Order} from './Order';
 import {Book} from './Book';
 
 interface OrderItemCreationAttributes {
+    quantity: number;
     orderId: number;
     bookId: number;
 }
@@ -18,6 +19,13 @@ export class OrderItem extends Model<OrderItem, OrderItemCreationAttributes> {
         primaryKey: true,
     })
     id: number;
+
+    @ApiProperty({ example: 2, description: 'Number of books of this type' })
+    @AllowNull(false)
+    @Column({
+        type: DataType.INTEGER,
+    })
+    quantity!: number;
 
     @ApiProperty({ example: 1, description: 'Order ID' })
     @ForeignKey(() => Order)

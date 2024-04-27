@@ -4,6 +4,7 @@ import {User} from './User';
 import {Book} from './Book';
 
 interface CartItemCreationAttributes {
+    quantity: number;
     ownerId: number;
     bookId: number;
 }
@@ -19,7 +20,7 @@ export class CartItem extends Model<CartItem, CartItemCreationAttributes> {
     })
     id: number;
 
-    @ApiProperty({ example: 2, description: 'Number  of books of this type' })
+    @ApiProperty({ example: 2, description: 'Number of books of this type' })
     @AllowNull(false)
     @Column({
         type: DataType.INTEGER,

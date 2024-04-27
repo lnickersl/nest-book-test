@@ -17,7 +17,7 @@ export class OrdersService {
     ) {}
 
     async createOrder({ ordererId }: CreateOrderDto) {
-        this.sequelize.transaction(async (transaction) => {
+        return this.sequelize.transaction(async (transaction) => {
             const cartItems = await this.cartItemRepository.findAll({ where: { ownerId: ordererId }, transaction });
 
             if (!cartItems || cartItems.length === 0) {
@@ -32,7 +32,9 @@ export class OrdersService {
                 await this.cartItemRepository.destroy({ where: { id }, transaction });
             }
 
-            return order;
+            const fullOrder = await this.orderRepository.findByPk(order.id, { include: OrderItem, transaction });
+
+            return fullOrder;
         });
     }
 

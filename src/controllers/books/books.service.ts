@@ -5,6 +5,8 @@ import {Book} from '../../models/Book';
 import {Sequelize} from 'sequelize-typescript';
 import {Author} from '../../models/Author';
 import {AuthorBook} from '../../models/AuthorBook';
+import {SearchBookDto} from './dto/search-book.dto';
+import {Op} from 'sequelize';
 
 @Injectable()
 export class BooksService {
@@ -39,5 +41,19 @@ export class BooksService {
     async getAllBooks() {
         const books = await this.bookRepository.findAll();
         return books;
+    }
+
+    async searchBooks({ query }: SearchBookDto) {
+        const searchTerm = `%${query}%`;
+
+        const orders = await this.bookRepository.findAll({ 
+            where: { [Op.or]: {
+                name:  { [Op.like]: searchTerm }, 
+                '$authors.fullName$':  { [Op.like]: searchTerm }, 
+            }}, 
+            include: [Author], 
+        });
+
+        return orders;
     }
 }

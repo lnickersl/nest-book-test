@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {CreateAuthorDto} from './dto/create-author.dto';
 import {InjectModel} from '@nestjs/sequelize';
 import {Author} from '../../models/Author';
+import {Book} from '../../models/Book';
 
 @Injectable()
 export class AuthorsService {
@@ -13,7 +14,13 @@ export class AuthorsService {
     }
 
     async getAllAuthors() {
-        const authors = await this.authorRepository.findAll();
+        const authors = await this.authorRepository.findAll({ include: [
+            { 
+                model: Book, 
+                attributes: { exclude: ['createdAt', 'updatedAt'] }, 
+                through: { attributes: [] }, 
+            },
+        ] });
         return authors;
     }
 }

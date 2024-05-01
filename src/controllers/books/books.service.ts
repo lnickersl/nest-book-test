@@ -39,7 +39,13 @@ export class BooksService {
     }
 
     async getAllBooks() {
-        const books = await this.bookRepository.findAll();
+        const books = await this.bookRepository.findAll({ include: [
+            { 
+                model: Author, 
+                attributes: { exclude: ['createdAt', 'updatedAt'] }, 
+                through: { attributes: [] }, 
+            },
+        ] });
         return books;
     }
 

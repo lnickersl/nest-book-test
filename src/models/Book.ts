@@ -39,6 +39,12 @@ export class Book extends Model<Book, BookCreationAttributes> {
     })
     price!: number;
 
+    @ApiProperty({ example: "'the':1 'silmarillion':2", description: 'Search keys' })
+    @Column({
+        type: DataType.TSVECTOR,
+    })
+    _search: string;
+
     @BelongsToMany(() => User, {
         through: {
             model: () => CartItem,

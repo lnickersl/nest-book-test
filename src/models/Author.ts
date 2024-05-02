@@ -19,9 +19,16 @@ export class Author extends Model<Author, CreateAuthorDto> {
     @ApiProperty({ example: "John Ronald Reuel Tolkien", description: 'Full name of the author' })
     @AllowNull(false)
     @Column({
+        unique: true,
         type: DataType.STRING,
     })
-    fullName!: string;
+    full_name!: string;
+
+    @ApiProperty({ example: "'jhon':1 'ronald':2 'renuel':3 'tolkien':4", description: 'Search keys' })
+    @Column({
+        type: DataType.TSVECTOR,
+    })
+    _search: string;
 
     @BelongsToMany(() => Book, {
         through: {

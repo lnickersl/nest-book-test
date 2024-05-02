@@ -22,13 +22,13 @@ export class BooksService {
         return this.sequelize.transaction(async transaction => {
             const book = await this.bookRepository.create({ name, price }, { transaction });
 
-            const foundAuthors = await this.authorRepository.findAll({ where: { fullName: authors }, transaction });
+            const foundAuthors = await this.authorRepository.findAll({ where: { full_name: authors }, transaction });
 
             for (let name of authors) {
-                let author = foundAuthors.find((found) => found.fullName === name);
+                let author = foundAuthors.find((found) => found.full_name === name);
 
                 if (!author) {
-                    author = await this.authorRepository.create({ fullName: name }, { transaction });
+                    author = await this.authorRepository.create({ full_name: name }, { transaction });
                 }
 
                 await book.$add('author', author, { through: AuthorBook,  transaction });
@@ -55,7 +55,7 @@ export class BooksService {
         const orders = await this.bookRepository.findAll({ 
             where: { [Op.or]: {
                 name:  { [Op.like]: searchTerm }, 
-                '$authors.fullName$':  { [Op.like]: searchTerm }, 
+                '$authors.full_name$':  { [Op.like]: searchTerm }, 
             }}, 
             include: [Author], 
         });

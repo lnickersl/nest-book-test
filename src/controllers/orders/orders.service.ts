@@ -53,7 +53,7 @@ export class OrdersService {
         const orders = await this.orderRepository.findAll({ 
             where: { ordererId, [Op.or]: {
                 '$books.name$':  { [Op.like]: searchTerm }, 
-                '$books.authors.fullName$':  { [Op.like]: searchTerm }, 
+                '$books.authors.full_name$':  { [Op.like]: searchTerm }, 
             }}, 
             include: [{ model: Book, include: [Author] }], 
         });

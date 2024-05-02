@@ -50,12 +50,10 @@ export class BooksService {
     }
 
     async searchBooks({ query }: SearchBookDto) {
-        const searchTerm = `%${query}%`;
-
         const orders = await this.bookRepository.findAll({ 
             where: { [Op.or]: {
-                name:  { [Op.like]: searchTerm }, 
-                '$authors.full_name$':  { [Op.like]: searchTerm }, 
+                _search:  { [Op.match]: Sequelize.fn('to_tsquery', query) }, 
+                '$authors._search$':  { [Op.match]: Sequelize.fn('to_tsquery', query) }, 
             }}, 
             include: [Author], 
         });

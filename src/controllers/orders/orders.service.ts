@@ -48,12 +48,10 @@ export class OrdersService {
     }
 
     async searchOrders({ ordererId, query }: SearchOrderDto) {
-        const searchTerm = `%${query}%`;
-
         const orders = await this.orderRepository.findAll({ 
             where: { ordererId, [Op.or]: {
-                '$books.name$':  { [Op.like]: searchTerm }, 
-                '$books.authors.full_name$':  { [Op.like]: searchTerm }, 
+                '$books._search$':  { [Op.match]: Sequelize.fn('to_tsquery', query) },
+                '$books.authors._search$':  { [Op.match]: Sequelize.fn('to_tsquery', query) }, 
             }}, 
             include: [{ model: Book, include: [Author] }], 
         });
